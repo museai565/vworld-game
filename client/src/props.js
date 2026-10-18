@@ -94,7 +94,7 @@ export class PropManager {
     const entry = this.props.get(id);
     if (!entry) return;
     entry.body.destroy();
-    entry.entity.destroy();
+    entry.entity.dispose(); // v1.0: destroy() -> dispose() (shim still works, but use the canonical name)
     this.props.delete(id);
   }
 
