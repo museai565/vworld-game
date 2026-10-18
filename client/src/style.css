@@ -1,0 +1,310 @@
+/* VWorld client — clean minimal dark UI. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #0b0e14;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #e8ecf1;
+}
+
+#game {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+#ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+}
+
+#ui button, #ui input, #ui select, #ui .clickable {
+  pointer-events: auto;
+}
+
+.hidden { display: none !important; }
+
+/* --- start screen -------------------------------------------------------- */
+#start-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 8, 12, 0.55);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+#start-screen .card {
+  width: 340px;
+  padding: 28px;
+  background: #141a24;
+  border: 1px solid #2a3444;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+}
+
+#start-screen h1 {
+  font-size: 26px;
+  letter-spacing: 6px;
+  text-align: center;
+}
+
+#start-screen .sub {
+  text-align: center;
+  color: #8b96a8;
+  font-size: 13px;
+  margin: 4px 0 18px;
+}
+
+#start-screen label {
+  display: block;
+  font-size: 12px;
+  color: #9aa5b8;
+  margin-bottom: 12px;
+}
+
+#start-screen input, #start-screen select {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 9px 10px;
+  background: #0d1219;
+  border: 1px solid #2a3444;
+  border-radius: 8px;
+  color: #e8ecf1;
+  font-size: 14px;
+  outline: none;
+}
+
+#start-screen input:focus, #start-screen select:focus {
+  border-color: #3fa7ff;
+}
+
+#start-screen .row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+#start-screen button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2a3444;
+  color: #e8ecf1;
+}
+
+#start-screen button.primary {
+  background: #3fa7ff;
+  color: #08111c;
+}
+
+#start-screen button:hover { filter: brightness(1.12); }
+#start-screen button:disabled { opacity: 0.55; cursor: default; }
+
+#join-error {
+  min-height: 20px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #ff7b7b;
+  text-align: center;
+}
+
+/* --- chat ---------------------------------------------------------------- */
+#chat {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#chat-log {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: rgba(10, 14, 20, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  font-size: 13px;
+  pointer-events: auto;
+}
+
+#chat-log .msg .who { font-weight: 700; color: #8fd0ff; }
+#chat-log .msg.self .who { color: #7dffb2; }
+#chat-log .msg.sys { color: #8b96a8; font-style: italic; }
+#chat-log .empty { color: #5b6577; font-style: italic; }
+
+#chat-input {
+  padding: 9px 12px;
+  background: rgba(10, 14, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #e8ecf1;
+  font-size: 13px;
+  outline: none;
+  user-select: text;
+}
+
+#chat-input:focus { border-color: #3fa7ff; }
+
+/* --- toolbar --------------------------------------------------------------- */
+#toolbar {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(10, 14, 20, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  pointer-events: auto;
+}
+
+#toolbar .sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 2px 4px;
+}
+
+#toolbar button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #cfd6e2;
+  border-radius: 8px;
+  padding: 7px 9px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#toolbar button:hover { background: rgba(255, 255, 255, 0.08); }
+
+#toolbar button.active {
+  background: rgba(63, 167, 255, 0.18);
+  border-color: #3fa7ff;
+  color: #fff;
+}
+
+#toolbar button .key {
+  display: block;
+  font-size: 9px;
+  color: #8b96a8;
+}
+
+#toolbar button.active .key { color: #bfe0ff; }
+
+#color-btns button.swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+#color-btns button.swatch.active { border-color: #fff; }
+
+/* --- character menu ---------------------------------------------------------- */
+#char-wrap {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+#char-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 14, 20, 0.72);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#char-menu {
+  width: 230px;
+  padding: 10px;
+  background: rgba(14, 19, 27, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  pointer-events: auto;
+}
+
+#char-menu h3 {
+  font-size: 12px;
+  color: #9aa5b8;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+#char-menu .pack {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 4px;
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+#char-menu .pack button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background: #3fa7ff;
+  color: #08111c;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#char-menu .pack button:disabled {
+  background: #2a3444;
+  color: #8b96a8;
+  cursor: default;
+}
+
+#char-menu .pack .dl { color: #7dffb2; font-size: 12px; }
+
+/* --- hint ------------------------------------------------------------------ */
+#hint {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 14px;
+  font-size: 12px;
+  color: #aeb8ca;
+  background: rgba(10, 14, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  transition: opacity 0.6s;
+}
